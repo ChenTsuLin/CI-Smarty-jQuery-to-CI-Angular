@@ -84,13 +84,13 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
 
 ##Second Step: Start Angular
 
-####1. Add Script (at html head)
-*need add others for another usages*
+####1. Add Script
+*need add others for another usages(at html head)*
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.min.js"></script>
 
-*js for this page*
+*js for this page(at html body bottom)*
 
     <script src="dirPath/js/thisPage.js"></script>
 
