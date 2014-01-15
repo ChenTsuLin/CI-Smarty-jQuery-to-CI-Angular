@@ -107,7 +107,8 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
 
     <div ng-view>
 
-*html body bottom*
+*use ng-template (at html body bottom)*
+*part separate to individual php file*
 
     <script id="part1.html" type="text/ng-template">
         <?php include APPPATH.'views/filePath/firstPart.php'; ?>
@@ -119,7 +120,7 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
         <?php include APPPATH.'views/filePath/thirdPart.php'; ?>
     </script>
     
-*thisPage.js*
+*thisPage.js add route config*
 
     app.config(function($routeProvider) {
         $routeProvider
@@ -149,7 +150,14 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
         }
     }]);
 
-####6. Controller for redirect (add param $location)
+####6. Redirect In Controller function (add param $location)
+*[CI, Smarty, jQuery] way*
+
+    function redirect() {
+        location.href = 'path/part1';
+    }
+
+*[CI, Angular] way*
 
     app.controller('SecondPartControl', ['$scope', '$location', function($scope, $location) {
         $scope.toPart1 = function() {
@@ -157,14 +165,27 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
         };
     }]);
     
-####7. Controller for ajax (add param $http)
+####7. Ajax In Controller function (add param $http)
+*[CI, Smarty, jQuery] way*
+
+    $.ajax({
+        type: 'POST',
+        url: 'some.php',
+        data: { "foo": "bar" }
+    }).done(function(data) {
+        // get data to view
+    }).fail(function(jqXHR, textStatus) {
+        // error msg
+    });
+
+*[CI, Angular] way*
 
     app.controller('thirdPartControl1', ['$scope', '$http', function($scope, $http) {
         $scope.ajax = function() {
             $http({
                 url: 'http://www.example.com/targetUrl',
                 method: 'POST',
-                data: {"foo": "bar"}
+                data: { "foo": "bar" }
             }).success(function(data, status, headers, config) {
                 $scope.data = data;
             }).error(function(data, status, headers, config) {
@@ -173,8 +194,10 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
         };
     }]);
     
-###8. Share Data betwwen Controllers
+###8. Share Data between Controllers
 *factory*
+*data value for share*
+*getValue setValue method*
 
     app.factory('data', [function () {
         var Data = {
@@ -202,3 +225,53 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
             $data.setDataValue($scope.data);
         };
     }]);
+    
+####9. Foreach
+*[CI, Angular] way (pervious)*
+
+    <?php foreach ($data_list as $i => $data) { ?>
+        <li data-key="<?=$i?>"><?=$data?></li>
+    <?php } ?>
+    
+*[CI, Angular] way*
+
+    <li data-key="{{$index + 1}}" ng-repeat="data in data_list"></li>
+    
+####10. Click
+*[CI, Smarty, jQuery] way*
+
+    <button type="submit" id="want-to-click"></button>
+    
+
+    $('#want-to-click').on('click', function() {
+        doSomething();
+    });
+    
+*[CI, Angular] way*
+
+    <button type="submit" ng-click="deleteData()"></button>
+
+
+    app.controller('Controller', ['$scope', function($scope) {
+        $scope.datas = [{key: value1}, {key: value2}];
+        $scope.deleteData = function() {
+            $scope.datas.pop();    
+        }
+    }]);
+    
+####11. Show & hide
+*[CI, Smarty, jQuery] way*
+
+    <div id="want-to-show"><div>
+    <div id="want-to-hide"><div>
+
+
+    $('#want-to-show').show();
+    $('#want-to-hide').hide();
+    
+*[CI, Angular] way*
+
+    <div ng-show=""><div>
+    <div ng-hide=""><div>
+
+    
