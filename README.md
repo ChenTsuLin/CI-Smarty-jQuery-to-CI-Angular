@@ -9,6 +9,7 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
 
 *[CI, Smarty, jQuery] way*
 
+    $this->load->library('parser');
     $this->parser->parse('dirPath/file.tpl', $data);
 
 *[CI, Angular] way*
