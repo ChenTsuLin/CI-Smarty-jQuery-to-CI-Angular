@@ -277,6 +277,7 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
     
 ####12. Data Init
 *[CI, Angular] way*
+
 *controller php*
 
     $data['for_init'] = json_encode($for_init)
