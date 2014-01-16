@@ -274,5 +274,21 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
 
     <div ng-show=""><div>
     <div ng-hide=""><div>
-
     
+####12. Data Init
+*[CI, Angular] way*
+*controller php*
+
+    $data['for_init'] = json_encode($for_init)
+
+*view php*
+
+    <div ng-init="data = <?=$for_init?>">
+    
+*js*
+
+    app.controller('Controller', ['$scope', function($scope) {
+        var for_init = JSON.parse($scope.data);
+        ........
+        }
+    }]);
