@@ -85,12 +85,12 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
 ####6. time -
 *[CI, Smarty, jQuery] way*
 
-    <?=$group['profile']->post_time|date_format:'%d'?>
+    <?=$time|date_format:'%d'?>
 
 
 *[CI, Angular] way*
 
-    <?=strftime('%d', $group['profile']->post_time)?>
+    <?=strftime('%d', $time)?>
 
 ##Second Step: Start Angular
 
