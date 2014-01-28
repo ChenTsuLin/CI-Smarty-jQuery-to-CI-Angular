@@ -81,7 +81,16 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
     <?php foreach ($data_list as $i => $data) { ?>
         <li data-key="<?=$i?>"><?=$data?></li>
     <?php } ?>
+    
+####6. time -
+*[CI, Smarty, jQuery] way*
 
+    <?=$group['profile']->post_time|date_format:'%d'?>
+
+
+*[CI, Angular] way*
+
+    <?=strftime('%d', $group['profile']->post_time)?>
 
 ##Second Step: Start Angular
 
