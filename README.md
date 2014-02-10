@@ -210,15 +210,15 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
 *getValue setValue method*
 
     app.factory('data', [function () {
-        var Data = {
-                dataValue: '',
+        var dataValue = '',
+            Data = {
                 getDataValue: function() {
                     return this.dataValue;
                 },
                 setDataValue: function(dataValue) {
-                this.dataValue = dataValue;
-            }
-        };
+                    this.dataValue = dataValue;
+                }
+            };
         return Data;
     }]);
 
