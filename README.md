@@ -9,117 +9,148 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
 
 *[CI, Smarty, jQuery] way*
 
-    $this->load->library('parser');
-    $this->parser->parse('dirPath/file.tpl', $data);
+```php
+$this->load->library('parser');
+$this->parser->parse('dirPath/file.tpl', $data);
+```
 
 *[CI, Angular] way*
 
-    $this->load->view('dirPath/file.php', $data);
+```js
+$this->load->view('dirPath/file.php', $data);
+```
 
 ###View
 --
 ####1. File Ext -
 
-    file.tpl -> file.php
-
+```
+file.tpl -> file.php
+```
 
 
 ####2. Include File -
 
 *[CI, Smarty, jQuery] way*
 
-    {include file="dirPath/file.tpl"}
+```smarty
+{include file="dirPath/file.tpl"}
+```
 
 *[CI, Angular] way*
 
-    <?php include APPPATH.'views/dirPath/file.php'; ?>
-
+```php
+<?php include APPPATH.'views/dirPath/file.php'; ?>
+```
 
 
 ####3. Include Var -
 
 *[CI, Smarty, jQuery] way*
 
-    {$var}
+```smarty
+{$var}
+```
 
 *[CI, Angular] way*
 
-    <?=$var?>
-
+```php
+<?=$var?>
+```
 
 
 ####4. If / else -
 *[CI, Smarty, jQuery] way*
 
-    {if codition}
-        <input name="test" value="true">
-    {else}
-        <input name="test" value="false">
-    {/if}
-
+```smarty
+{if codition}
+    <input name="test" value="true">
+{else}
+    <input name="test" value="false">
+{/if}
+```
 
 *[CI, Angular] way*
 
-    <?php if (condition) { ?>
-        <input name="test" value="true">
-    <?php } else { ?>
-        <input name="test" value="false">
-    <?php } ?>
-
+```php
+<?php if (condition) { ?>
+    <input name="test" value="true">
+<?php } else { ?>
+    <input name="test" value="false">
+<?php } ?>
+```
 
 
 ####5. foreach -
 *[CI, Smarty, jQuery] way*
 
-    {foreach key=i from=$data_list item=data}
-        <li data-key="{$i}">{$data}</li>
-    {/foreach}
+```smarty
+{foreach key=i from=$data_list item=data}
+    <li data-key="{$i}">{$data}</li>
+{/foreach}
+```
 
 
 *[CI, Angular] way*
 
-    <?php foreach ($data_list as $i => $data) { ?>
-        <li data-key="<?=$i?>"><?=$data?></li>
-    <?php } ?>
-    
+```php
+<?php foreach ($data_list as $i => $data) { ?>
+    <li data-key="<?=$i?>"><?=$data?></li>
+<?php } ?>
+```
+
 ####6. time -
 *[CI, Smarty, jQuery] way*
 
-    <?=$time|date_format:'%d'?>
-
+```smarty
+<?=$time|date_format:'%d'?>
+```
 
 *[CI, Angular] way*
 
-    <?=strftime('%d', $time)?>
+```php
+<?=strftime('%d', $time)?>
+```
 
 ##Second Step: Start Angular
 
 ####1. Add Script
 *need add others for another usages(at html head)*
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.min.js"></script>
+```html
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.min.js"></script>
+```
 
 *js for this page(at html body bottom)*
 
-    <script src="dirPath/js/thisPage.js"></script>
+```html
+<script src="dirPath/js/thisPage.js"></script>
+```
 
 ####2. Add App Scope (at body)
 
-    <body ng-app="app">
-    
+```html
+<body ng-app="app">
+```
+
 ####3. Do thisPage.js Init
 
-    var app = angular.module('app', ['ngRoute']);
-    
+```js
+var app = angular.module('app', ['ngRoute']);
+```
+
 ####4. Page Route
 *body div for view*
 
-    <div ng-view>
+```html
+<div ng-view>
+```
 
 *use ng-template (at html body bottom)*
 *part separate to individual php file*
 
+```php
     <script id="part1.html" type="text/ng-template">
         <?php include APPPATH.'views/filePath/firstPart.php'; ?>
     </script>
@@ -129,9 +160,11 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
     <script id="part3.html" type="text/ng-template">
         <?php include APPPATH.'views/filePath/thirdPart.php'; ?>
     </script>
-    
+```
+
 *thisPage.js add route config*
 
+```js
     app.config(function($routeProvider) {
         $routeProvider
             .when('/part1', {
@@ -150,34 +183,42 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
                 redirectTo:'/part1'
             });
     });
+```
 
 ####5. Add Controller 
 
+```js
     app.controller('FirstPartControl', ['$scope', function($scope) {
         $scope.datas = [{key: value1}, {key: value2}];
         $scope.addData = function(data) {
             $scope.datas.push(data);    
         }
     }]);
+```
 
 ####6. Redirect In Controller function (add param $location)
 *[CI, Smarty, jQuery] way*
 
+```js
     function redirect() {
         location.href = 'path/part1';
     }
+```
 
 *[CI, Angular] way*
 
+```js
     app.controller('SecondPartControl', ['$scope', '$location', function($scope, $location) {
         $scope.toPart1 = function() {
             $location.path('/part1');
         };
     }]);
+ ```
     
 ####7. Ajax In Controller function (add param $http)
 *[CI, Smarty, jQuery] way*
 
+```js
     $.ajax({
         type: 'POST',
         url: 'some.php',
@@ -187,9 +228,11 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
     }).fail(function(jqXHR, textStatus) {
         // error msg
     });
+```
 
 *[CI, Angular] way*
 
+```js
     app.controller('thirdPartControl1', ['$scope', '$http', function($scope, $http) {
         $scope.ajax = function() {
             $http({
@@ -203,12 +246,14 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
             });
         };
     }]);
-    
+```
+  
 ###8. Share Data between Controllers
 *factory*
 *data value for share*
 *getValue setValue method*
 
+```js
     app.factory('data', [function () {
         var dataValue = '',
             Data = {
@@ -221,84 +266,110 @@ from [CI, Smarty, jQuery] to [CI, Angular] Guide
             };
         return Data;
     }]);
+```
 
 *controller1*
 
+```js
     app.controller('FirstPartControl', 'data', ['$scope', function($scope, $data) {
         $scope.datas = $data.getDataValue();
     }]);
+```
 
 *controller2*
 
+```js
     app.controller('secondPartControl', 'data', ['$scope', function($scope, $data) {
         $scope.doSomeThing = function() {
             $data.setDataValue($scope.data);
         };
     }]);
-    
+```
+
 ####9. Foreach
 *[CI, Angular] way (pervious)*
 
-    <?php foreach ($data_list as $i => $data) { ?>
-        <li data-key="<?=$i?>"><?=$data?></li>
-    <?php } ?>
-    
+```php
+<?php foreach ($data_list as $i => $data) { ?>
+    <li data-key="<?=$i?>"><?=$data?></li>
+<?php } ?>
+```
+
 *[CI, Angular] way*
 
-    <li data-key="{{$index + 1}}" ng-repeat="data in data_list"></li>
-    
+```html
+<li data-key="{{$index + 1}}" ng-repeat="data in data_list"></li>
+```
+
 ####10. Click
 *[CI, Smarty, jQuery] way*
 
-    <button type="submit" id="want-to-click"></button>
-    
+```html
+<button type="submit" id="want-to-click"></button>
+```
 
+```js
     $('#want-to-click').on('click', function() {
         doSomething();
     });
+```
     
 *[CI, Angular] way*
 
-    <button type="submit" ng-click="deleteData()"></button>
+```html
+<button type="submit" ng-click="deleteData()"></button>
+```
 
-
+```js
     app.controller('Controller', ['$scope', function($scope) {
         $scope.datas = [{key: value1}, {key: value2}];
         $scope.deleteData = function() {
             $scope.datas.pop();    
         }
     }]);
+```
     
 ####11. Show & hide
 *[CI, Smarty, jQuery] way*
 
-    <div id="want-to-show"><div>
-    <div id="want-to-hide"><div>
+```html
+<div id="want-to-show"><div>
+<div id="want-to-hide"><div>
+```
 
+```js
+$('#want-to-show').show();
+$('#want-to-hide').hide();
+```
 
-    $('#want-to-show').show();
-    $('#want-to-hide').hide();
-    
 *[CI, Angular] way*
 
-    <div ng-show=""><div>
-    <div ng-hide=""><div>
+```html
+<div ng-show=""><div>
+<div ng-hide=""><div>
+```
     
 ####12. Data Init
 *[CI, Angular] way*
 
 *controller php*
 
-    $data['for_init'] = json_encode($for_init)
+```php
+$data['for_init'] = json_encode($for_init)
+```
 
 *view php*
 
-    <div ng-init="data = <?=$for_init?>">
-    
+```php
+<div ng-init="data = <?=$for_init?>">
+```
+
 *js*
 
+```js
     app.controller('Controller', ['$scope', function($scope) {
         var for_init = JSON.parse($scope.data);
         ........
         }
     }]);
+```
